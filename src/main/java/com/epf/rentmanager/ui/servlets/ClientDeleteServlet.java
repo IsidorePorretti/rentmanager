@@ -41,7 +41,9 @@ public class ClientDeleteServlet extends HttpServlet{
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 		}
 	
-	
+	/**
+	 * @return du doGet de ClientDeleteServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 				
@@ -67,6 +69,9 @@ public class ClientDeleteServlet extends HttpServlet{
 		
 	}
 	
+	/**
+	 * @return le doPost de ClientDeleteServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		

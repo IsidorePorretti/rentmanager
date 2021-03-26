@@ -12,7 +12,14 @@ public class Reservation {
 public Reservation() {
 	
 }
-
+/**
+ * @return définition des attributs de l'objet réservation
+ * @param id
+ * @param client
+ * @param vehicle
+ * @param debut
+ * @param fin
+ */
 public Reservation(long id, Client client, Vehicle vehicle, Date debut, Date fin) {
 	this.id 			= id;
 	this.client			= client;

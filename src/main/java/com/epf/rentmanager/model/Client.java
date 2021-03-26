@@ -6,17 +6,31 @@ import java.sql.Date;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 
+/**
+ * 
+ * @author porretti
+ *
+ */
 public class Client {
 	private long	id;
 	private String 	nom;
 	private String 	prenom;
 	private String	email;
 	private Date 	naissance;
-
+	
+	
 	public Client () {
 		
 	}
 	
+	/**
+	 * @return définition de l'objet client
+	 * @param id
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param naissance
+	 */
 	public Client (long id, String nom, String prenom, String email, Date naissance) {
 		this.id 		= id;
 		this.naissance 	= naissance;

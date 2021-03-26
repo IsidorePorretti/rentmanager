@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.exception.ServiceException;
@@ -16,13 +17,23 @@ import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.VehicleService;
 
+/**
+ * 
+ * @author porretti
+ *
+ */
+@Repository
 public class UI {
 	//private static ClientService client_service = ClientService.getInstance();
 	private static ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
-	private static ClientService client_service = context.getBean(ClientService.class);
+	//private static ClientService client_service = context.getBean(ClientService.class);
    
 	
-	
+	/** 
+	 * @return choix de l'espace de travail
+	 * @param args
+	 * @throws ServiceException
+	 */
 	public static void main(String[] args) throws ServiceException {
     	
     	int option_domain = IOUtils.readInt("Veuillez choisir quel utilisation vous souhaitez ? \n"
@@ -50,39 +61,6 @@ public class UI {
     	
    
     }
-
- 
-
-    
-
-    
-    public static void option_reservation() {
-    	int choice_reservation = IOUtils.readInt("Veuillez choisir quel utilisation vous souhaitez ? \n"
-    			+ "1. Voir la liste des réservations"
-    			+ "2. Créer une réservation"
-    			+ "3. Supprimer une réservation");
-     	
-    		switch (choice_reservation) {
-    		case 1 :
-    			//voir la liste des reservations
-    			break;
-    		
-    		case 2 :
-    			//créer une reservation
-    			
-    			break;
-    		
-    		case 3 :
-    			//supprimer une reservation
-    			break;
-
-    		default:
-    			break;
-    		} 	
-    }
-    
-
-
-    
+   
 
 }

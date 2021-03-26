@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.exception.ServiceException;
@@ -17,6 +18,7 @@ import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
 import com.epf.rentmanager.utils.IOUtils;
 
+@Repository
 public class UI_vehicle {
 	
 	//private static VehicleService vehicle_service = VehicleService.getInstance();
@@ -26,7 +28,9 @@ public class UI_vehicle {
 	private static ReservationService reservation_service = context.getBean(ReservationService.class);
 	  
 	
-	
+	/**
+	 * @return choix de l'action à réaliser dans la partie de travail sur les véhicules
+	 */
     public static void option_vehicle() {
     	int choice_vehicle = IOUtils.readInt("Veuillez choisir quel utilisation vous souhaitez ? \n"
     			+ "1. Voir la liste des véhicules  "
@@ -64,7 +68,9 @@ public class UI_vehicle {
     }
     
     
-	
+	/**
+	 * @return création d'un véhicule dans la BDD
+	 */
     public static void create_vehicle()  {
     	try {
 			String constructeur = IOUtils.readString("Veuillez saisir le nom du constructeur", true);
@@ -87,6 +93,9 @@ public class UI_vehicle {
 			}
       }  
     
+    /**
+     * @return liste de tous les véhicules de la BDD
+     */
     public static void list_of_vehicles() {
     	
     	try {
@@ -103,6 +112,9 @@ public class UI_vehicle {
 
     }
     
+    /** 
+     * @return liste d'un véhicule de la BDD correspondant à la recherche par un id
+     */
     public static void list_one_vehicle() {
     	
     	
@@ -144,7 +156,9 @@ public class UI_vehicle {
     
     
     
-	
+	/**
+	 * @return modification d'un véhicule de la BDD
+	 */
     public static void update_vehicle()  {
     	
     	try {
@@ -172,7 +186,9 @@ public class UI_vehicle {
 			}
       }  
     
-    
+    /**
+     * @return suppression d'un véhicule de la BDD
+     */
     public static void delete_vehicle() {
     	
     	try {
@@ -185,6 +201,9 @@ public class UI_vehicle {
 		}
     }
     
+    /**
+     * @return le nombre de véhicules de la BDD
+     */
     public static void count() {
     	
     	try {

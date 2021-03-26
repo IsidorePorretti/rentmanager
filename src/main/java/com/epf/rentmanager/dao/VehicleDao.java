@@ -54,7 +54,12 @@ public class VehicleDao {
 	
 	private static final String SELECT_COUNT_VEHICLE = "SELECT COUNT(id) AS count FROM Vehicle;";
 	
-	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return création d'un véhicule dans la BDD
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws DaoException {
 		long id = 0;
 		try {
@@ -79,7 +84,13 @@ public class VehicleDao {
 			throw new DaoException();
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return suppression d'un véhicule de la BDD
+	 * @throws DaoException
+	 */
 	public long delete(Vehicle vehicle) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -97,7 +108,12 @@ public class VehicleDao {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return modification d'un véhicule de la BDD
+	 * @throws DaoException
+	 */
 	public long update(Vehicle vehicle) throws DaoException {
 		
 		try {
@@ -123,7 +139,12 @@ public class VehicleDao {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param id
+	 * @return optional d'un véhicule de la BDD à partir d'une recherche par son id 
+	 * @throws DaoException
+	 */
 	public Optional<Vehicle> findById(long id) throws DaoException {
 
 		Optional<Vehicle> opt_vehicle;
@@ -156,6 +177,11 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * 
+	 * @return la liste de tous les véhicules de la BDD
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws DaoException {
 		List<Vehicle> result = new ArrayList<>();
 		try {
@@ -181,6 +207,12 @@ public class VehicleDao {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param clientId
+	 * @return liste d'un véhicule de la BDD à partir d'une recherche par l'id du client
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findVehicleByClientId(long clientId) throws DaoException {
 		
 		List<Vehicle> result1 = new ArrayList<>();
@@ -215,7 +247,12 @@ public class VehicleDao {
 		}	 	
 	}
 	
-	
+	/**
+	 * 
+	 * @param reservationId
+	 * @return liste d'un véhicule de la BDD à partir d'une recherche par l'id de la réservation
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findVehicleByReservationId(long reservationId) throws DaoException {
 		
 		List<Vehicle> result2 = new ArrayList<>();
@@ -250,7 +287,11 @@ public class VehicleDao {
 		}	 	
 	}
 	
-	
+	/**
+	 * 
+	 * @return le nombre de véhicules de la BDD
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 		
 		int nombre = 0;

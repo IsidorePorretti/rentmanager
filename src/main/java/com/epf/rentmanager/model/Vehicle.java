@@ -11,6 +11,11 @@ public class Vehicle {
 		
 	}
 	
+	/**
+	 * @return définition des attributs de l'objet véhicule
+	 * @param id
+	 * @param nb_places
+	 */
 	public Vehicle(long id, short nb_places) {
 		this.id 		= id;
 		this.nb_places 	= nb_places;	

@@ -50,80 +50,85 @@ public void init() throws ServletException {
 	super.init();
 	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-
-
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	// TODO Auto-generated method stub
-	try
-	{
-	req.setAttribute("clients", client_service.findAll());
-	req.setAttribute("vehicles", vehicle_service.findAll());
-	
-	RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/rents/update.jsp");
-	requestDispatcher.forward(req, resp);
+		
+		/**
+		 * @return le doGet de ReservationUpdateServlet
+			 */
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		try
+		{
+		req.setAttribute("clients", client_service.findAll());
+		req.setAttribute("vehicles", vehicle_service.findAll());
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/rents/update.jsp");
+		requestDispatcher.forward(req, resp);
+		}
+		
+		catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+				
 	}
 	
-	catch (ServiceException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	/**
+	 * @return le doPost de ReservationUpdateServlet
+	 */
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			Client client = new Client();
+			long client_long = Long.parseLong(req.getParameter("client"));
+			client.setId(client_long);
+			
+			Vehicle vehicle = new Vehicle();
+			long vehicle_long = Long.parseLong(req.getParameter("car"));
+			vehicle.setId(vehicle_long);
+			
+			Reservation reservation  = new Reservation();
+			
+			long monLongId=Long.parseLong(req.getParameter("id"));
+			reservation.setId(monLongId);
+			
+			reservation.setClient(client); 
+			reservation.setVehicle(vehicle);
+			
+	        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	        Date parsed;
+			
+				parsed = format.parse(req.getParameter("begin"));
+		        java.sql.Date debut = new java.sql.Date(parsed.getTime() );
+		        
+		        parsed = format.parse(req.getParameter("end"));
+		        java.sql.Date fin = new java.sql.Date(parsed.getTime());
+		        
+		        reservation.setDebut(debut);
+		        reservation.setFin(fin);
+			
+		        //System.out.println(reservation);
+		        
+		        reservation_service.update(reservation);
 	
+			resp.sendRedirect("http://localhost:8080/rentmanager/rents");
 	
 			
-}
-
-protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	try {
-		Client client = new Client();
-		long client_long = Long.parseLong(req.getParameter("client"));
-		client.setId(client_long);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		  catch (ParseException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}// TODO Auto-generated method stub
 		
-		Vehicle vehicle = new Vehicle();
-		long vehicle_long = Long.parseLong(req.getParameter("car"));
-		vehicle.setId(vehicle_long);
-		
-		Reservation reservation  = new Reservation();
-		
-		long monLongId=Long.parseLong(req.getParameter("id"));
-		reservation.setId(monLongId);
-		
-		reservation.setClient(client); 
-		reservation.setVehicle(vehicle);
-		
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date parsed;
-		
-			parsed = format.parse(req.getParameter("begin"));
-	        java.sql.Date debut = new java.sql.Date(parsed.getTime() );
-	        
-	        parsed = format.parse(req.getParameter("end"));
-	        java.sql.Date fin = new java.sql.Date(parsed.getTime());
-	        
-	        reservation.setDebut(debut);
-	        reservation.setFin(fin);
-		
-	        //System.out.println(reservation);
-	        
-	        reservation_service.update(reservation);
-
-		resp.sendRedirect("http://localhost:8080/rentmanager/rents");
-
-		
-	} catch (ServiceException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e.getMessage());
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e.getMessage());
+	
 	}
-	  catch (ParseException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e.getMessage());
-	}// TODO Auto-generated method stub
 	
-
-}
-
-
 	
-}
+		
+	}

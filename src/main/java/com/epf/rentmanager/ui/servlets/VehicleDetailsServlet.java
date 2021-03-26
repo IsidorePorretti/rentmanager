@@ -42,7 +42,9 @@ public class VehicleDetailsServlet extends HttpServlet {
 		}
 	
 
-	
+	/**
+	 * @return le doGet de VehicleDetailsServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -81,6 +83,9 @@ public class VehicleDetailsServlet extends HttpServlet {
 			
 			}
 	
+	/**
+	 * @return le doPost de VehicleDetailsServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(req, resp);

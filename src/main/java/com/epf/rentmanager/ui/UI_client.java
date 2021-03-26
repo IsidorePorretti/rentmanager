@@ -30,6 +30,9 @@ public class UI_client {
 	private static VehicleService vehicle_service = context.getBean(VehicleService.class);
 	private static ReservationService reservation_service = context.getBean(ReservationService.class);
 	
+	/**
+	 * @return choix de l'action à réaliser dans la partie de travail sur les clients
+	 */
     public static void option_client() {
     	int choice_client = IOUtils.readInt("Veuillez choisir quel utilisation vous souhaitez ? \n"
     			+ "1. Voir la liste des clients. "
@@ -70,6 +73,9 @@ public class UI_client {
 			}
     }
 	
+    /**
+     * @return création d'un client dans la BDD
+     */
     public static void create_client()  {
     	
     	   
@@ -103,7 +109,11 @@ public class UI_client {
     
 
     	  
-
+    /**
+	 *
+     * @param email
+     * @return la validité de l'email
+     */
     public static boolean isValid(String email) 
     { 
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
@@ -119,7 +129,9 @@ public class UI_client {
     	  
     	    
 
-    
+    /**
+     * @return la liste de tous les clients de la BDD
+     */
     public static void list_of_clients() {
     	
     		List<Client> list_all_client;
@@ -136,7 +148,9 @@ public class UI_client {
     	   	
     }   
     
-    
+    /**
+     * @return la liste d'un client correspondant à un id
+     */
     public static void list_one_client() {
     	
     	Client client = new Client();
@@ -175,8 +189,10 @@ public class UI_client {
 		}
 	   	
 }  
-    
- public static void update_client()  {
+    /**
+     * @return modification d'un client de la BDD
+     */
+    public static void update_client()  {
 
     	try {
 
@@ -213,6 +229,9 @@ public class UI_client {
       
     }  
     
+    /**
+     * @return suppression d'un client de la BDD
+     */
     public static void delete_client() {
     	
     	
@@ -226,7 +245,9 @@ public class UI_client {
 		}
     }
     
-    
+    /**
+     * @return le nombre de client de la BDD
+     */
     public static void count() {
     	
     	try {

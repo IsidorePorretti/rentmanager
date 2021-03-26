@@ -29,14 +29,19 @@ public class VehicleService {
 		this.vehicleDao = vehicleDao;
 	}
 	
-	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return création d'un véhicule
+	 * @throws ServiceException
+	 */
 	public long create(Vehicle vehicle) throws ServiceException {
 		// TODO: créer un véhicule
 		if (vehicle.getConstructeur().isEmpty()) {
 			throw new ServiceException();
 		}
 
-		if (vehicle.getNb_places() < 1) {
+		if (vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
 			throw new ServiceException();
 		}
 		
@@ -47,7 +52,13 @@ public class VehicleService {
 			throw new ServiceException();
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return modification d'un véhicule
+	 * @throws ServiceException
+	 */
 	public long update(Vehicle vehicle) throws ServiceException {
 		// TODO: modifier un véhicule
 		if (vehicle.getConstructeur().isEmpty()) {
@@ -66,6 +77,12 @@ public class VehicleService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return liste d'un véhicule correspondant à une recherche par son ID
+	 * @throws ServiceException
+	 */
 	public Vehicle findById(long id) throws ServiceException {
 		
 		Vehicle vehicle;
@@ -82,7 +99,12 @@ public class VehicleService {
 			throw new ServiceException();
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @return la liste de tous les véhicules de la BDD
+	 * @throws ServiceException
+	 */
 	public List<Vehicle> findAll() throws ServiceException {
 		// TODO: récupérer tous les vehicules
 		try {
@@ -92,6 +114,12 @@ public class VehicleService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param clientId
+	 * @return liste d'un véhicule de la BDD correspondant à une recherche d'un ID client
+	 * @throws ServiceException
+	 */
 	public List<Vehicle> findVehicleByClientId(long clientId) throws ServiceException {
 		// TODO: récupérer un vehicle par son id client
 
@@ -104,6 +132,12 @@ public class VehicleService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param reservationId
+	 * @return liste d'un véhicule de la BDD correspondant à une recherche d'un ID reservation
+	 * @throws ServiceException
+	 */
 	public List<Vehicle> findVehicleByReservationId(long reservationId) throws ServiceException {
 		// TODO: récupérer un vehicle par son id reservation
 
@@ -116,6 +150,12 @@ public class VehicleService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param vehicle
+	 * @return suppression du véhicule
+	 * @throws ServiceException
+	 */
 	public long delete (Vehicle vehicle) throws ServiceException {
 		// TODO : supprimer un vehicule
 
@@ -126,6 +166,11 @@ public class VehicleService {
 			}
 	}
 	
+	/**
+	 * 
+	 * @return le nombre de véhicules de la BDD
+	 * @throws ServiceException
+	 */
 	public int count() throws ServiceException {
 		//Compte les vehicules
 		try {

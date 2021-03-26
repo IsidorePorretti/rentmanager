@@ -27,7 +27,7 @@ public class ClientDao {
 		if(instance == null) {
 			instance = new ClientDao();
 		}
-		return instance;
+		return  instance;
 	}*/
 	
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
@@ -54,7 +54,13 @@ public class ClientDao {
 	
 	private static final String SELECT_COUNT_CLIENT = "SELECT COUNT(id) AS count FROM Client;";
 	
-	
+	private static final String FIND_EMAIL_QUERY = "SELECT email FROM Client WHERE email = ?;";
+	/**
+	 * 
+	 * @param client
+	 * @return création d'un client dans la BDD
+	 * @throws DaoException
+	 */
 	public long create(Client client) throws DaoException {
 		long id = 0;
 		try {
@@ -80,6 +86,13 @@ public class ClientDao {
 			throw new DaoException();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param client
+	 * @return suppression d'un client de la BDD
+	 * @throws DaoException
+	 */
 	public long delete(Client client ) throws DaoException {
 
 		try {
@@ -98,6 +111,12 @@ public class ClientDao {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param client
+	 * @return modification d'un client de la BDD
+	 * @throws DaoException
+	 */
 	public long update(Client client) throws DaoException {
 				
 			try {
@@ -126,7 +145,50 @@ public class ClientDao {
 		
 	}
 	
+	/**
+	 * 
+	 * @param email
+	 * @return le resultat de la recherche d'email, pour vérifier s'il existe déjà dans la BDD
+	 * @throws DaoException
+	 */
+    public Optional<Client> findEmail (String email) throws DaoException {
+    
+    	Optional<Client> opt_email;
+    	
+    	try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps = connection.prepareStatement(FIND_EMAIL_QUERY);
+			ps.setString(1, email);
+			
+			ResultSet resultSet = ps.executeQuery();
+			if (resultSet.next()){
+				Client client = new Client();			
+				client.setEmail(resultSet.getString("email"));
+				opt_email = Optional.of(client);
+
+			}else {
+				opt_email = Optional.empty();
+			}
+			resultSet.close();
+			ps.close();
+			connection.close();
+			
+			return opt_email;
+			
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+			throw new DaoException();
+		}
+	} 
 	
+	/**
+	 * 
+	 * @param id
+	 * @return optional client de la BDD à partir d'une recherche par l'id du client
+	 * @throws DaoException
+	 */
 	public Optional<Client> findById(long id) throws DaoException {
 
 	
@@ -168,7 +230,7 @@ public class ClientDao {
 	
 	/**
 	 * 
-	 * @return 
+	 * @return une liste de tous les clients de la BDD
 	 * @throws DaoException 
 	 */
 	public List<Client> findAll() throws DaoException {
@@ -202,7 +264,12 @@ public class ClientDao {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param vehicleId
+	 * @return liste d'un client de la BDD à partir d'une recherche par l'id du véhicule
+	 * @throws DaoException
+	 */
 	public List<Client> findClientByVehicleId(long vehicleId) throws DaoException {
 		
 		List<Client> result1 = new ArrayList<>();
@@ -236,7 +303,12 @@ public class ClientDao {
 		}	 	
 	}
 	
-	
+	/**
+	 * 
+	 * @param reservationId
+	 * @return liste d'un client de la BDD à partir d'une recherche par l'id de la réservation
+	 * @throws DaoException
+	 */
 	public List<Client> findClientByReservationId(long reservationId) throws DaoException {
 		
 		List<Client> result2 = new ArrayList<>();
@@ -270,7 +342,11 @@ public class ClientDao {
 		}	 	
 	}
 	
-	
+	/**
+	 * 
+	 * @return le nombre de client de la BDD
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 		
 		int nombre = 0;

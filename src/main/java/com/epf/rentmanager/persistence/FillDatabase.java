@@ -14,7 +14,11 @@ import com.epf.rentmanager.persistence.ConnectionManager;
 
 public class FillDatabase {
 
-
+	/**
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
     public static void main(String[] args) throws Exception {
         try {
             DeleteDbFiles.execute("~", "RentManagerDatabase", true);
@@ -23,7 +27,10 @@ public class FillDatabase {
             e.printStackTrace();
         }
     }
-
+    /**
+     * 
+     * @throws SQLException
+     */
 	private static void insertWithPreparedStatement() throws SQLException {
         Connection connection = ConnectionManager.getConnection();
         PreparedStatement createPreparedStatement = null;
@@ -35,8 +42,8 @@ public class FillDatabase {
         //createTablesQueries.add("DROP TABLE IF EXISTS Vehicle");
         createTablesQueries.add("CREATE TABLE IF NOT EXISTS Vehicle(id INT primary key auto_increment, constructeur VARCHAR(100), modele VARCHAR(100), nb_places TINYINT(255))");
         
-        createTablesQueries.add("CREATE TABLE IF NOT EXISTS Reservation(id INT primary key auto_increment, client_id INT, foreign key(client_id) REFERENCES Client(id), vehicle_id INT, foreign key(vehicle_id) REFERENCES Vehicle(id), debut DATETIME, fin DATETIME)");
-
+        createTablesQueries.add("CREATE TABLE IF NOT EXISTS Reservation(id INT primary key auto_increment, client_id INT, foreign key(client_id) REFERENCES Client(id) ON DELETE CASCADE, vehicle_id INT, foreign key(vehicle_id) REFERENCES Vehicle(id) ON DELETE CASCADE, debut DATETIME, fin DATETIME)");
+        
         try {
             connection.setAutoCommit(false);
 

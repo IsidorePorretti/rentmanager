@@ -1,7 +1,10 @@
 package com.epf.rentmanager.service;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +27,101 @@ public class ClientService {
 		this.clientDao = clientDao;
 	}
 	
+	/**
+	 * 
+	 * @param email
+	 * @return l'email est-il valide ?
+	 */
+    public static boolean isValid(String email) 
+    { 
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+                            "[a-zA-Z0-9_+&*-]+)*@" + 
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+                            "A-Z]{2,7}$"; 
+                              
+        Pattern pat = Pattern.compile(emailRegex); 
+        if (email == null) 
+            return false; 
+        return pat.matcher(email).matches(); 
+    } 
+    
+    public boolean check_if_email_exists(Client client) throws ServiceException
+    { 
+    		
+    		try {
+    			Optional<Client> opt_email = clientDao.findEmail(client.getEmail());
+    			if(opt_email.isPresent()) {
+    				return true;
+    			} else {
+    				return false;
+    			}
 
+    		} catch (DaoException e) {
+    			System.out.println(e.getMessage());
+    			throw new ServiceException();
+    		}
+    } 
+    
+    /**
+     * 
+     * @param naissance
+     * @return l'age du client
+     */
+    public int getAge(Date naissance) {
+        int age = 0;
+        try {
+        		Calendar maintenant = Calendar.getInstance();
+        	    Calendar ddn = Calendar.getInstance();
 
-	
+        	    ddn.setTime(naissance);
+
+        	    if (ddn.after(maintenant)) 
+        	    {
+        	        throw new IllegalArgumentException("Date de naissance ulterieure a aujourd'hui");
+        	    }
+        	    age = maintenant.get(Calendar.YEAR) - ddn.get(Calendar.YEAR);
+
+        	    if (maintenant.get(Calendar.DAY_OF_YEAR) < ddn.get(Calendar.DAY_OF_YEAR)) 
+        	    {
+        	        age--;
+        	    }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //System.out.println(age);
+        return age;
+}
+    
+    
+	/**
+	 * 
+	 * @param client
+	 * @return création du client
+	 * @throws ServiceException
+	 */
 	public long create(Client client) throws ServiceException {
 		// TODO: créer un client
 		if (client.getNom().isEmpty()) {
 			throw new ServiceException();
 		}
+		if ((client.getNom()).length() < 3){
+			throw new ServiceException();
+		}
+			
 		if (client.getPrenom().isEmpty()) {
+			throw new ServiceException();
+		}
+		if ((client.getPrenom()).length() < 3){
+			throw new ServiceException();
+		}
+		if (!isValid(client.getEmail())){
+			throw new ServiceException();
+		}
+		if (getAge(client.getNaissance()) < 18){
+			throw new ServiceException();
+		}
+		if (check_if_email_exists(client)) {
 			throw new ServiceException();
 		}
 
@@ -46,6 +135,12 @@ public class ClientService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param client
+	 * @return modification du client
+	 * @throws ServiceException
+	 */
 	public long update(Client client) throws ServiceException {
 		// TODO: modifier un client
 		
@@ -66,6 +161,12 @@ public class ClientService {
 		
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return une liste avec un client de la BDD correspondant à la recherche d'un id client
+	 * @throws ServiceException
+	 */
 	public Client findById(long id) throws ServiceException {
 		// TODO: récupérer un client par son id
 		Client client;
@@ -85,6 +186,11 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * 
+	 * @return une liste de tous les clients de la BDD
+	 * @throws ServiceException
+	 */
 	public List<Client> findAll() throws ServiceException {
 		// TODO: récupérer tous les clients
 		try {
@@ -94,6 +200,12 @@ public class ClientService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param vehicleId
+	 * @return une liste avec un client de la BDD correspondant à la recherche par rapport à l'ID de la voiture
+	 * @throws ServiceException
+	 */
 	public List<Client> findClientByVehicleId(long vehicleId) throws ServiceException {
 		// TODO: récupérer un client par son id véhicule
 
@@ -106,6 +218,12 @@ public class ClientService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param reservationId
+	 * @return une liste avec un client de la BDD correspondant à la recherche par rapport à l'ID de la reservation
+	 * @throws ServiceException
+	 */
 	public List<Client> findClientByReservationId(long reservationId) throws ServiceException {
 		// TODO: récupérer un client par son id reservation
 
@@ -118,6 +236,12 @@ public class ClientService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param client
+	 * @return suppression du client
+	 * @throws ServiceException
+	 */
 	public long delete (Client client) throws ServiceException {
 		// TODO : supprimer un client
 
@@ -128,6 +252,11 @@ public class ClientService {
 			}
 	}
 	
+	/**
+	 * 
+	 * @return le nombre de client de la BDD
+	 * @throws ServiceException
+	 */
 	public int count() throws ServiceException {
 		//Compte les clients
 		try {
@@ -137,4 +266,6 @@ public class ClientService {
 		}
 		
 	}	
+
+    	
 }

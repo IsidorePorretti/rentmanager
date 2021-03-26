@@ -22,7 +22,11 @@ import com.epf.rentmanager.service.VehicleService;
 
 
 @WebServlet("/home")
-
+/**
+ * 
+ * @author porretti
+ *
+ */
 public class HomeServlet extends HttpServlet {
 	
 	private static ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);

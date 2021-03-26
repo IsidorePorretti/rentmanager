@@ -5,6 +5,11 @@ import java.sql.SQLException;
 
 import org.h2.jdbcx.JdbcDataSource;
 
+/**
+ * 
+ * @author porretti
+ *
+ */
 public class ConnectionManager {
 	private static final String DB_CONNECTION = "jdbc:h2:~/RentManagerDatabase";
 	private static final String DB_USER = "";

@@ -32,12 +32,15 @@ public class ClientCreateServlet extends HttpServlet{
 	ClientService client_service;
 	
 	@Override
+	
 	public void init() throws ServletException {
 		super.init();
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 		}
 	
-	
+	/** 
+	 * @return doGet de ClientCreateServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -47,6 +50,9 @@ public class ClientCreateServlet extends HttpServlet{
 				
 	}
 	
+	/**
+	 * @return doPost de ClientCreateServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			Client client = new Client();

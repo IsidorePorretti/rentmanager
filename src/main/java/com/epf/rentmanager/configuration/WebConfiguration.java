@@ -12,7 +12,11 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.epf.rentmanager.service.VehicleService;
-
+/**
+ * 
+ * @author porretti
+ *
+ */
 @Configuration
 @EnableWebMvc
 public class WebConfiguration implements WebApplicationInitializer {

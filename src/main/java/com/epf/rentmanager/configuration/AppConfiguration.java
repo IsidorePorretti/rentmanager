@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 	{ "com.epf.rentmanager.service", "com.epf.rentmanager.dao", "com.epf.rentmanager.persistence" }) 
 	// packages dans lesquels chercher les beans
 
-	
+	/**
+	 * 
+	 * @author porretti
+	 *
+	 */
 	public class AppConfiguration {	
 }

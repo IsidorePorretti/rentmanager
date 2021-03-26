@@ -1,4 +1,4 @@
-package com.epf.rentmanager.service;
+   package com.epf.rentmanager.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.dao.ReservationDao;
@@ -22,7 +23,13 @@ public class ReservationService {
 		this.reservationDao = reservationDao;
 	}
 	
-	
+
+	/**
+	 * 
+	 * @param reservation
+	 * @return creation d'une reservation
+	 * @throws ServiceException
+	 */
 	public long create(Reservation reservation) throws ServiceException {
 		// TODO: créer une reservation
 		
@@ -34,6 +41,10 @@ public class ReservationService {
 			throw new ServiceException();
 		}
 */
+		if (vehicleIsOccupated(reservation)) {
+			throw new ServiceException("Le véhicule est déjà occupé sur ces dates");
+		}
+		
 		try {
 			return reservationDao.create(reservation);
 			
@@ -44,6 +55,12 @@ public class ReservationService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param reservation
+	 * @return modification d'une reservation
+	 * @throws ServiceException
+	 */
 	public long update(Reservation reservation) throws ServiceException {
 		// TODO: modifier une reservation
 		
@@ -64,7 +81,13 @@ public class ReservationService {
 		}
 		
 	}
-
+	
+	/**
+	 * 
+	 * @param client_id
+	 * @return une liste d'une reservation trouvée par son ID client
+	 * @throws ServiceException
+	 */
 	public List<Reservation> findResaByClientId(long client_id) throws ServiceException {
 		// TODO: récupérer une reservation par son id client
 		
@@ -77,6 +100,12 @@ public class ReservationService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param vehicle_id
+	 * @return une liste d'une reservation trouvée par son ID vehicule
+	 * @throws ServiceException
+	 */
 	public List<Reservation> findResaByVehicleId(long vehicle_id) throws ServiceException {
 		// TODO: récupérer une reservation par son id client
 
@@ -89,7 +118,13 @@ public class ReservationService {
 		}
 	}
 	
-
+	
+	/**
+	 * 
+	 * @param id
+	 * @return la liste d'une reservation trouvée par son id
+	 * @throws ServiceException
+	 */
 	public List<Reservation> findById(long id) throws ServiceException {
 		// TODO: récupérer une reservation par son id client
 
@@ -103,7 +138,11 @@ public class ReservationService {
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @return la liste de toutes les reservations de la BDD
+	 * @throws ServiceException
+	 */
 	public List<Reservation> findAll() throws ServiceException {
 		// TODO: récupérer toutes les reservations
 		try {
@@ -113,6 +152,12 @@ public class ReservationService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param reservation
+	 * @return supprime la reservation de la BDD
+	 * @throws ServiceException
+	 */
 	public long delete (Reservation	reservation) throws ServiceException {
 		// TODO : supprimer une reservation
 
@@ -123,6 +168,26 @@ public class ReservationService {
 			}
 	}
 	
+	public boolean vehicleIsOccupated(Reservation reservation_verif) throws ServiceException {
+		List<Reservation> list_resa_of_vehicle;
+		try {
+			list_resa_of_vehicle = reservationDao.findReservationVehicleIsOccupated(reservation_verif);
+			if (list_resa_of_vehicle.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (DaoException e) {
+			throw new ServiceException();
+		}
+
+	}
+	
+	/**
+	 * 
+	 * @return le nombre de reservations de la BDD
+	 * @throws ServiceException
+	 */
 	public int count() throws ServiceException {
 		//Compte les reservations
 		try {

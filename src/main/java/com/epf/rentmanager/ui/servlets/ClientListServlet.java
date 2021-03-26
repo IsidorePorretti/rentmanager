@@ -35,7 +35,9 @@ public class ClientListServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 		}
 	
-	
+	/**
+	 * @return le doGet de ClientListServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -60,6 +62,9 @@ public class ClientListServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * @return le doPost de ClientListServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(req, resp);

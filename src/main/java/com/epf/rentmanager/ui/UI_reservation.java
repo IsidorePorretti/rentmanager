@@ -6,6 +6,7 @@ package com.epf.rentmanager.ui;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Repository;
 
 import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.exception.ServiceException;
@@ -17,6 +18,7 @@ import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
 import com.epf.rentmanager.utils.IOUtils;
 
+@Repository
 	public class UI_reservation {
 		
 		//private static ReservationService reservation_service = ReservationService.getInstance();
@@ -25,7 +27,9 @@ import com.epf.rentmanager.utils.IOUtils;
 		private static VehicleService vehicle_service = context.getBean(VehicleService.class);
 		private static ReservationService reservation_service = context.getBean(ReservationService.class);
 		   
-		
+		/**
+		 * @return choix de l'action à réaliser dans la partie de travail sur les réservations
+		 */
 	    public static void option_reservation() {
 	    	int choice_reservation = IOUtils.readInt("Veuillez choisir quel utilisation vous souhaitez ? \n"
 	    			+ "1. Voir la liste des réservations  "
@@ -64,7 +68,9 @@ import com.epf.rentmanager.utils.IOUtils;
 	    }
 	    
 	    
-		
+		/**
+		 * @return création d'une réservation dans la BDD
+		 */
 	    public static void create_reservation()  {
 	    	try {
 				long client_id = IOUtils.readInt("Veuillez saisir l'id du client");
@@ -95,6 +101,9 @@ import com.epf.rentmanager.utils.IOUtils;
 				}
 	      }  
 	    
+	    /**
+	     * @return lsite de toutes les réservations de la BDD
+	     */
 	    public static void list_of_reservations() {
 	    	
 	    	try {
@@ -112,6 +121,9 @@ import com.epf.rentmanager.utils.IOUtils;
 
 	    }
 	    
+	    /**
+	     * @return liste d'une réservation de la BDD correspondant à un id
+	     */
 	    public static void list_one_reservation() {
 	    	
 	    	List <Client> list_client;
@@ -144,6 +156,9 @@ import com.epf.rentmanager.utils.IOUtils;
 
 	    }
 	    
+	    /**
+	     * @return modification d'une réservation de la BDD
+	     */
 	    public static void update_reservation()  {
 	    	
 	    	try {
@@ -179,6 +194,9 @@ import com.epf.rentmanager.utils.IOUtils;
 				}
 	      }  
 	    
+	    /**
+	     * @return suppression d'une réservation de la BDD
+	     */
 	    public static void delete_reservation() {
 	    	
 	    	try {
@@ -193,6 +211,9 @@ import com.epf.rentmanager.utils.IOUtils;
 			}
 	    }
 
+	    /**
+	     * @return le nombre de réservations de la BDD
+	     */
 	    public static void count() {
 	    	
 	    	try {

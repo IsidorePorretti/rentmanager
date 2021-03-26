@@ -49,7 +49,9 @@ public void init() throws ServletException {
 	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
-	
+	/**
+	 * @return le doGet de ReservationCreateServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try
@@ -70,6 +72,9 @@ public void init() throws ServletException {
 				
 	}
 	
+	/**
+	 * @return le doPost de ReservationCreateServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			Client client = new Client();

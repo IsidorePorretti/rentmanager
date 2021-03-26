@@ -36,6 +36,9 @@ public class VehicleCreateServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 		}
 
+	/**
+	 * @return le doGet de VehicleCreateServlet
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 			
@@ -43,6 +46,9 @@ public class VehicleCreateServlet extends HttpServlet {
 			requestDispatcher.forward(req, resp);
 			
 }
+	/**
+	 * @return le doPost de VehicleCreateServlet
+	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// traitement du formulaire (appel à la méthode de sauvegarde)}
 		

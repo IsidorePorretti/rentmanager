@@ -75,10 +75,21 @@ public class ReservationDao {
 	
 	private static final String SELECT_COUNT_RESERVATION = "SELECT COUNT(id) AS count FROM Reservation;";
 	
+	private static final String FIND_RESERVATION_OF_VEHICLE_PERIOD = "SELECT Reservation.id, Reservation.vehicle_id, Reservation.debut, Reservation.fin,Reservation.client_id, "
+			+ "Client.nom, Client.prenom,Client.email, Client.naissance, "
+			+ "Vehicle.constructeur, Vehicle.modele, Vehicle.nb_places " + "FROM Reservation "
+			+ "INNER JOIN Client ON Reservation.client_id= Client.id "
+			+ "INNER JOIN Vehicle ON Reservation.vehicle_id = Vehicle.id " + "WHERE Reservation.vehicle_id = ? "
+			+ "AND ( ? BETWEEN Reservation.debut AND Reservation.fin OR ? BETWEEN Reservation.debut AND Reservation.fin ) "
+			+ "ORDER BY Reservation.debut ASC;";
 	
-	
-
-	
+ 
+	/**
+	 * 
+	 * @param reservation
+	 * @return création d'une réservation dans la BDD
+	 * @throws DaoException
+	 */
 	public long create(Reservation reservation) throws DaoException {
 		long id = 0;
 		try {
@@ -113,6 +124,12 @@ public class ReservationDao {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param reservation
+	 * @return suppréssion d'une réservation de la BDD
+	 * @throws DaoException
+	 */
 	public long delete(Reservation reservation) throws DaoException {
 
 		try {
@@ -131,7 +148,12 @@ public class ReservationDao {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @param reservation
+	 * @return modification d'une réservation de la BDD
+	 * @throws DaoException
+	 */
 	public long update(Reservation reservation) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -157,7 +179,19 @@ public class ReservationDao {
 			throw new DaoException();
 		}
 	}
+
 	
+	
+	 
+	
+
+
+	/**
+	 * 
+	 * @param clientId
+	 * @return liste d'une réservation de la BDD à partir d'une recherche par l'id du client
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
 		
 		List<Reservation> result1 = new ArrayList<>();
@@ -206,6 +240,12 @@ public class ReservationDao {
 		}	 	
 	}
 	
+	/**
+	 * 
+	 * @param vehicleId
+	 * @return liste d'une réservation de la BDD à partir d'une recherche par l'id du véhicule
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
 		
 		List<Reservation> result2 = new ArrayList<>();
@@ -253,7 +293,12 @@ public class ReservationDao {
 		}	 
 	}
 
-	
+	/**
+	 * 
+	 * @param reservationId
+	 * @return liste d'une réservation de la BDD à partir d'une recherche par son id
+	 * @throws DaoException
+	 */
 	public List<Reservation> findById(long reservationId) throws DaoException {
 		List<Reservation> result3 = new ArrayList<>();
 
@@ -300,7 +345,11 @@ public class ReservationDao {
 		}	 
 	}
 	
-	
+	/**
+	 * 
+	 * @return la liste de toutes les réservations de la BDD
+	 * @throws DaoException
+	 */
 	public List<Reservation> findAll() throws DaoException {
 		List<Reservation> result = new ArrayList<>();
 		try {
@@ -348,6 +397,64 @@ public class ReservationDao {
 		
 	}
 	
+	
+	public List<Reservation> findReservationVehicleIsOccupated(Reservation reservation_verif)
+			throws DaoException {
+
+		List<Reservation> list_reservation = new ArrayList<>();
+		try {
+
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps = connection
+					.prepareStatement(FIND_RESERVATION_OF_VEHICLE_PERIOD);
+			ps.setLong(1, reservation_verif.getVehicle().getId());
+			ps.setDate(2, reservation_verif.getDebut());
+			ps.setDate(3, reservation_verif.getFin());
+			ps.setLong(4, reservation_verif.getId());
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				Reservation reservation = new Reservation();
+				reservation.setId(resultSet.getLong("id"));
+
+				Client client = new Client();
+				client.setId(resultSet.getInt("client_id"));
+				client.setNom(resultSet.getString("nom"));
+				client.setPrenom(resultSet.getString("prenom"));
+				client.setEmail(resultSet.getString("email"));
+				client.setNaissance(resultSet.getDate("naissance"));
+
+				reservation.setClient(client);
+
+				Vehicle vehicle = new Vehicle();
+				vehicle.setId(resultSet.getLong("vehicle_id"));
+				vehicle.setModele(resultSet.getString("modele"));
+				vehicle.setConstructeur(resultSet.getString("constructeur"));
+				vehicle.setNb_places(resultSet.getShort("nb_places"));
+				reservation.setVehicle(vehicle);
+
+				reservation.setDebut(resultSet.getDate("debut"));
+				reservation.setFin(resultSet.getDate("fin"));
+
+				list_reservation.add(reservation);
+
+			}
+
+			resultSet.close();
+			ps.close();
+			connection.close();
+			return list_reservation;
+		} catch (SQLException e) {
+			throw new DaoException();
+		}
+
+	}
+	
+	/**
+	 * 
+	 * @return le nombre de réservations de la BDD
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 		
 		int nombre = 0;
