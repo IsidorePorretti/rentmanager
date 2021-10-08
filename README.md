@@ -1,5 +1,5 @@
 # rentmanager
-Rendu des TP rentmanager sur Java de PORRETTI Isidore, EPF MIN 1
+Rendu des TP rentmanager sur Java de [Isidore PORRETTI](https://github.com/IsidorePorretti) , EPF MIN 1
 
 Difficultés rencontrées :
 
@@ -13,7 +13,7 @@ Solutions:
 
 Quand j'avais un problème sur ces tp, je cherchais dans un premier temps des informations sur internet, voici une liste non exhaustive des sites consultés :
 Openclassrooms, stackoverflow, codes-sources waytolearn, qastack, forums.commentcamarche, sarch.maven...
-Je pouvais aussi demander de l'aide à des camarades de classe sur le discord de la promotion, parmi lesquels Lansana DIOMANDE qui m'a été d'une grande aide.
+Je pouvais aussi demander de l'aide à des camarades de classe sur le discord de la promotion, parmi lesquels [Lansana DIOMANDE](https://github.com/Asanio06)   qui m'a été d'une grande aide.
 
 Choix effectués :
 
